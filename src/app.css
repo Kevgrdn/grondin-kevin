@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+
+@theme {
+	--font-display: 'Fraunces', Georgia, serif;
+	--font-sans: 'Archivo', system-ui, sans-serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+	/* Thème fourni — frozen-water */
+	--color-frozen-water-50: #edf8f6;
+	--color-frozen-water-100: #daf1ed;
+	--color-frozen-water-200: #b5e3db;
+	--color-frozen-water-300: #90d5c9;
+	--color-frozen-water-400: #6bc7b8;
+	--color-frozen-water-500: #46b9a6;
+	--color-frozen-water-600: #389485;
+	--color-frozen-water-700: #2a6f63;
+	--color-frozen-water-800: #1c4a42;
+	--color-frozen-water-900: #0e2521;
+	--color-frozen-water-950: #0a1a17;
+
+	/* Thème fourni — celadon */
+	--color-celadon-50: #ebfaf0;
+	--color-celadon-100: #d6f5e0;
+	--color-celadon-200: #aeeac2;
+	--color-celadon-300: #85e0a3;
+	--color-celadon-400: #5dd585;
+	--color-celadon-500: #34cb66;
+	--color-celadon-600: #2aa252;
+	--color-celadon-700: #1f7a3d;
+	--color-celadon-800: #155129;
+	--color-celadon-900: #0a2914;
+	--color-celadon-950: #071c0e;
+
+	/* Thème fourni — powder-blush */
+	--color-powder-blush-50: #fbe9e9;
+	--color-powder-blush-100: #f7d4d4;
+	--color-powder-blush-200: #efa9a9;
+	--color-powder-blush-300: #e77e7e;
+	--color-powder-blush-400: #df5353;
+	--color-powder-blush-500: #d72828;
+	--color-powder-blush-600: #ac2020;
+	--color-powder-blush-700: #811818;
+	--color-powder-blush-800: #561010;
+	--color-powder-blush-900: #2b0808;
+	--color-powder-blush-950: #1e0606;
+
+	/* Thème fourni — jasmine */
+	--color-jasmine-50: #fff8e5;
+	--color-jasmine-100: #fff1cc;
+	--color-jasmine-200: #ffe499;
+	--color-jasmine-300: #ffd666;
+	--color-jasmine-400: #ffc933;
+	--color-jasmine-500: #ffbb00;
+	--color-jasmine-600: #cc9600;
+	--color-jasmine-700: #997000;
+	--color-jasmine-800: #664b00;
+	--color-jasmine-900: #332500;
+	--color-jasmine-950: #241a00;
+
+	/* Alias sémantiques utilisés par les composants */
+	--color-ink: var(--color-frozen-water-950);
+	--color-ink-2: var(--color-frozen-water-900);
+	--color-ink-3: var(--color-frozen-water-800);
+	--color-line: var(--color-frozen-water-800);
+	--color-paper: var(--color-frozen-water-50);
+	--color-muted: var(--color-frozen-water-300);
+	--color-accent: var(--color-celadon-400);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--color-ink);
+	color: var(--color-paper);
+	font-family: var(--font-sans);
+	-webkit-font-smoothing: antialiased;
+}
+
+::selection {
+	background: var(--color-celadon-400);
+	color: var(--color-celadon-950);
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-celadon-400);
+	outline-offset: 3px;
+}
+
+input,
+textarea {
+	caret-color: var(--color-celadon-400);
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+	background: var(--color-ink-3);
+	border-radius: 8px;
+}
+
+/* Animation d'entrée au chargement de la page (hero, titre, navigation) */
+@keyframes hero-in {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes nav-in {
+	from {
+		transform: translateY(-100%);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
+
+.hero-in {
+	animation: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-side-in {
+	from {
+		opacity: 0;
+		transform: translateX(44px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.hero-side-in {
+	animation: hero-side-in 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nav-in {
+	animation: nav-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Slide des éléments quand ils entrent dans l'écran (voir actions/reveal.ts) */
+.reveal-init {
+	opacity: 0;
+}
+
+.reveal-from-up {
+	transform: translateY(28px);
+}
+
+.reveal-from-left {
+	transform: translateX(-36px);
+}
+
+.reveal-from-right {
+	transform: translateX(36px);
+}
+
+.reveal-init.is-visible {
+	opacity: 1;
+	transform: translate(0, 0);
+	transition:
+		opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal-init {
+		opacity: 1;
+		transform: none;
+	}
+	html {
+		scroll-behavior: auto;
+	}
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}

@@ -1,0 +1,80 @@
+name: Deploy to OVH VPS
+
+# Déploie le site sur le VPS OVH à chaque push sur la branche Kevin.
+# Déclenchement manuel possible depuis l'onglet Actions de GitHub.
+on:
+  push:
+    branches: [Kevin]
+  workflow_dispatch:
+
+# Un seul déploiement à la fois : un push rapide n'en écrase pas un en cours.
+concurrency:
+  group: deploy-ovh
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check
+        run: npm run check
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check OVH secrets
+        env:
+          OVH_HOST: ${{ secrets.OVH_HOST }}
+          OVH_USER: ${{ secrets.OVH_USER }}
+          OVH_SSH_KEY: ${{ secrets.OVH_SSH_KEY }}
+          OVH_PATH: ${{ secrets.OVH_PATH }}
+        run: |
+          missing=""
+          [ -z "$OVH_HOST" ] && missing="$missing OVH_HOST"
+          [ -z "$OVH_USER" ] && missing="$missing OVH_USER"
+          [ -z "$OVH_SSH_KEY" ] && missing="$missing OVH_SSH_KEY"
+          [ -z "$OVH_PATH" ] && missing="$missing OVH_PATH"
+          if [ -n "$missing" ]; then
+            echo "::error::Secrets GitHub manquants :$missing"
+            echo "Crée-les dans Settings > Secrets and variables > Actions du dépôt."
+            exit 1
+          fi
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.OVH_SSH_KEY }}
+
+      - name: Trust OVH host
+        env:
+          OVH_HOST: ${{ secrets.OVH_HOST }}
+          OVH_PORT: ${{ secrets.OVH_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${OVH_PORT:-22}" -H "$OVH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Deploy build/ to OVH VPS
+        env:
+          OVH_HOST: ${{ secrets.OVH_HOST }}
+          OVH_USER: ${{ secrets.OVH_USER }}
+          OVH_PORT: ${{ secrets.OVH_PORT }}
+          OVH_PATH: ${{ secrets.OVH_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -p ${OVH_PORT:-22}" \
+            build/ "$OVH_USER@$OVH_HOST:${OVH_PATH%/}/"

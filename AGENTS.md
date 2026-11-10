@@ -22,6 +22,19 @@ formation, avec téléchargement du CV et contact via LinkedIn.
 - `npm run build` — build de production (doit réussir)
 - `npm run preview` — prévisualiser le build
 
+## Déploiement (GitHub Actions → VPS OVH)
+
+- `.github/workflows/deploy.yml` : à chaque push sur la branche `Kevin`
+  (ou lancement manuel dans l'onglet Actions), GitHub build le site statique
+  (`@sveltejs/adapter-static`, dossier `build/`) puis l'envoie en rsync/SSH
+  sur le VPS OVH. Un seul déploiement à la fois.
+- Secrets GitHub requis (Settings > Secrets and variables > Actions) :
+  `OVH_HOST`, `OVH_USER`, `OVH_SSH_KEY` (clé privée), `OVH_PATH` (dossier web
+  du VPS, ex. `/var/www/html`). `OVH_PORT` optionnel (22 par défaut).
+- Le VPS doit servir le contenu de `OVH_PATH` (nginx ou Apache) et la clé
+  publique correspondante doit être dans `~/.ssh/authorized_keys` de
+  l'utilisateur OVH.
+
 ## Thème (imposé)
 
 Quatre palettes définies comme tokens Tailwind dans `src/app.css` :

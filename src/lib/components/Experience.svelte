@@ -3,7 +3,7 @@
 	import { reveal } from '#lib/actions/reveal.js';
 	import { education, experience, profile, shortCourses } from '#lib/data/portfolio.js';
 
-	let open = $state(experience[0]?.role ?? '');
+	let open = $state(experience[0]?.period ?? '');
 </script>
 
 <section id="parcours" class="border-t border-line bg-ink-2 scroll-mt-20">
@@ -33,7 +33,7 @@
 			<Accordion.Root type="single" bind:value={open} class="divide-y divide-line border-y border-line">
 				{#each experience as job, i}
 					<div use:reveal={{ delay: i * 90 }}>
-					<Accordion.Item value={job.role}>
+					<Accordion.Item value={job.period}>
 						<Accordion.Header>
 							<Accordion.Trigger class="group grid w-full gap-1 py-6 text-left sm:grid-cols-[190px_1fr_auto] sm:items-baseline sm:gap-8">
 								<span class="font-mono text-[13px] text-muted tabular-nums">{job.period}</span>
@@ -44,8 +44,20 @@
 								<svg class="hidden text-muted transition-transform duration-200 group-data-[state=open]:rotate-45 sm:block" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
 							</Accordion.Trigger>
 						</Accordion.Header>
-						<Accordion.Content>
-							<p class="max-w-[65ch] pb-7 leading-relaxed text-paper/75 sm:pl-[222px]">{job.description}</p>
+						<Accordion.Content class="accordion-content">
+							<div class="pb-7 sm:pl-[222px]">
+								<p class="max-w-[65ch] leading-relaxed text-paper/75">{job.description}</p>
+								{#if job.tasks?.length}
+									<ul class="mt-4 max-w-[65ch] space-y-2.5">
+										{#each job.tasks as task}
+											<li class="flex items-start gap-3 text-[15px] leading-relaxed text-paper/85">
+												<span class="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-celadon-400" aria-hidden="true"></span>
+												{task}
+											</li>
+										{/each}
+									</ul>
+								{/if}
+							</div>
 						</Accordion.Content>
 					</Accordion.Item>
 					</div>
@@ -57,7 +69,10 @@
 				{#each education as item, i}
 					<li use:reveal={{ delay: i * 70 }} class="grid gap-1 py-4 sm:grid-cols-[190px_1fr] sm:gap-8">
 						<span class="font-mono text-[13px] text-muted tabular-nums">{item.period}</span>
-						<span class="text-[15px]"><span class="font-medium">{item.title}</span> <span class="text-muted">· {item.place}</span></span>
+						<span>
+							<span class="block text-[15px] font-medium">{item.title}</span>
+							<span class="mt-0.5 block text-sm text-celadon-300">{item.place}</span>
+						</span>
 					</li>
 				{/each}
 			</ul>

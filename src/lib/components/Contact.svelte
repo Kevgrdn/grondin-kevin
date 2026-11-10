@@ -10,7 +10,7 @@
 		<div use:reveal={{ from: 'left' }}>
 			<h2 class="font-display text-4xl font-medium tracking-[-0.02em] text-balance sm:text-5xl">Un projet, un poste, une question ?</h2>
 			<p class="mt-5 max-w-[55ch] leading-relaxed text-paper/85">
-				Le plus simple est de m’écrire sur LinkedIn. Dis-moi ce que tu veux construire, où tu en es et pour quand. Je suis à Montréal, avec une mobilité France / Canada.
+				Le plus simple est de m’écrire sur LinkedIn. Dis-moi ce que tu veux construire, où tu en es et pour quand. Je suis à Montréal, mobile entre la France et le Canada.
 			</p>
 
 			<a

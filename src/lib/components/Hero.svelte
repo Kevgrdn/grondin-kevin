@@ -4,7 +4,7 @@
 </script>
 
 <section id="top" class="mx-auto max-w-6xl px-5 pt-32 pb-20 sm:px-8 sm:pt-40 sm:pb-28">
-	<div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+	<div class="grid items-center gap-10 lg:grid-cols-[1fr_360px] lg:gap-14">
 		<div>
 	<p class="hero-in mb-6 inline-flex items-center gap-2 text-sm text-paper/85" style="animation-delay: 0ms">
 		<span class="h-2 w-2 rounded-full bg-celadon-400" aria-hidden="true"></span>
@@ -47,7 +47,7 @@
 	</ul>
 		</div>
 
-		<figure class="hero-side-in mx-auto w-full max-w-[520px] lg:max-w-none" style="animation-delay: 350ms">
+		<figure class="hero-side-in mx-auto w-full max-w-[300px] sm:max-w-[340px] lg:mx-0 lg:w-[360px] lg:max-w-none lg:justify-self-end" style="animation-delay: 350ms">
 			<img
 				src={illustration}
 				alt="Illustration d’un développeur assis à son bureau, en train de coder sur un ordinateur portable"

@@ -4,9 +4,9 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	// bits-ui distribue des fichiers .svelte : Vite doit les compiler, pas les externaliser en SSR.
+	// bits-ui et @lucide/svelte distribuent des fichiers .svelte : Vite doit les compiler, pas les externaliser en SSR.
 	ssr: {
-		noExternal: ['bits-ui']
+		noExternal: ['bits-ui', '@lucide/svelte']
 	},
 	plugins: [
 		tailwindcss(),

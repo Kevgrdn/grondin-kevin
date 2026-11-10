@@ -148,6 +148,41 @@ textarea {
 	animation: nav-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Ouverture lente de l'accordéon Parcours (Bits UI expose la hauteur du contenu) */
+@keyframes accordion-slide-down {
+	from {
+		height: 0;
+		opacity: 0;
+	}
+	to {
+		height: var(--bits-accordion-content-height);
+		opacity: 1;
+	}
+}
+
+@keyframes accordion-slide-up {
+	from {
+		height: var(--bits-accordion-content-height);
+		opacity: 1;
+	}
+	to {
+		height: 0;
+		opacity: 0;
+	}
+}
+
+.accordion-content {
+	overflow: hidden;
+}
+
+.accordion-content[data-state='open'] {
+	animation: accordion-slide-down 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accordion-content[data-state='closed'] {
+	animation: accordion-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* Slide des éléments quand ils entrent dans l'écran (voir actions/reveal.ts) */
 .reveal-init {
 	opacity: 0;

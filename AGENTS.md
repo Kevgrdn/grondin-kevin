@@ -53,7 +53,7 @@ Contraste texte ≥ 4,5:1, focus visible, `prefers-reduced-motion` respecté.
 - **Design (impeccable, mode Experience)** : hero = titre à gauche,
   illustration à droite (empilée sur mobile). Animations : nav qui descend,
   titre et hero en cascade au chargement, slide des sections au scroll.
-- **Technique** : `vite.config.ts` garde `ssr.noExternal: ['bits-ui']`
+- **Technique** : `vite.config.ts` garde `ssr.noExternal: ['bits-ui', '@lucide/svelte']`
   (sans quoi le dev SSR renvoie une 500 sur les fichiers `.svelte`).
   Imports via l'alias `#lib/...` avec extension `.js`.
 - **Vérification** : après chaque changement, `npm run check`, `npm run build`,

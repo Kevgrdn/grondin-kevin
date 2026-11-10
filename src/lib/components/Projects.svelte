@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { Tabs } from 'bits-ui';
+	import { AppWindow, Braces, Globe, LayoutGrid, Workflow } from '@lucide/svelte';
 	import { reveal } from '#lib/actions/reveal.js';
 	import { projects, type Project } from '#lib/data/portfolio.js';
 
 	const tabs = [
-		{ value: 'tous', label: 'Tous' },
-		{ value: 'site', label: 'Sites' },
-		{ value: 'application', label: 'Applications' },
-		{ value: 'api', label: 'API' }
+		{ value: 'tous', label: 'Tous', icon: LayoutGrid },
+		{ value: 'site', label: 'Sites', icon: Globe },
+		{ value: 'application', label: 'Applications', icon: AppWindow },
+		{ value: 'api', label: 'API', icon: Braces },
+		{ value: 'automatisation', label: 'Automatisations', icon: Workflow }
 	] as const;
 
 	type TabValue = (typeof tabs)[number]['value'];
@@ -24,7 +26,7 @@
 	<div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
 		<h2 use:reveal={{ from: 'left' }} class="font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">Projets sélectionnés</h2>
 		<p use:reveal={{ delay: 100 }} class="mt-4 max-w-[62ch] leading-relaxed text-muted">
-			Les réalisations de mon parcours diplômant RNCP, en 2021. C’est là que j’ai appris le métier, en livrant pour de vrai.
+			Lecteur IPTV, ce portfolio et une landing page sont publiés. Le reste vient de mon parcours diplômant RNCP, en 2021, là où j’ai appris le métier.
 		</p>
 
 		<Tabs.Root bind:value={active} class="mt-10">
@@ -32,8 +34,9 @@
 				{#each tabs as tab}
 					<Tabs.Trigger
 						value={tab.value}
-						class="rounded-full border border-line px-4 py-2 text-sm font-medium text-paper/80 transition-colors hover:border-celadon-400 hover:text-celadon-300 data-[state=active]:border-celadon-400 data-[state=active]:bg-celadon-400 data-[state=active]:font-semibold data-[state=active]:text-celadon-950"
+						class="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium text-paper/80 transition-colors hover:border-celadon-400 hover:text-celadon-300 data-[state=active]:border-celadon-400 data-[state=active]:bg-celadon-400 data-[state=active]:font-semibold data-[state=active]:text-celadon-950"
 					>
+						<tab.icon size={15} strokeWidth={1.8} aria-hidden="true" />
 						{tab.label}
 					</Tabs.Trigger>
 				{/each}

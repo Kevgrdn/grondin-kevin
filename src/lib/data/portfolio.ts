@@ -56,18 +56,18 @@ export const skillGroups: SkillGroup[] = [
 	},
 	{
 		title: 'Développement',
-		skills: ['API', 'JavaScript', 'TypeScript', 'SvelteKit', 'Git', 'GitHub']
+		skills: ['API', 'JavaScript', 'TypeScript', 'SvelteKit', 'Vue', 'React', 'NestJS', 'Git', 'GitHub']
 	},
 	{
 		title: 'Architecture',
-		skills: ['Conception d’applications', 'Automatisation n8n', 'Bases de données', 'Authentification']
+		skills: ['Conception d’applications', 'Automatisation n8n', 'Bases de données', 'SQL', 'Authentification', 'Rust']
 	}
 ];
 
-/** Stack technique, déduite des compétences du CV, rangée par usage. */
+/** Stack technique, rangée par usage. */
 export const techStack: { title: string; items: string[] }[] = [
-	{ title: 'Langages', items: ['HTML', 'CSS', 'Sass', 'JavaScript', 'TypeScript'] },
-	{ title: 'Framework', items: ['SvelteKit'] },
+	{ title: 'Langages', items: ['HTML', 'CSS', 'Sass', 'JavaScript', 'TypeScript', 'SQL', 'Rust'] },
+	{ title: 'Frameworks', items: ['SvelteKit', 'Vue', 'React', 'NestJS'] },
 	{ title: 'API et données', items: ['API', 'Bases de données', 'Authentification'] },
 	{ title: 'Outils', items: ['Git', 'GitHub', 'n8n'] },
 	{ title: 'Pratiques', items: ['Intégration de maquette', 'Animations', 'SEO', 'E-commerce'] }
@@ -76,15 +76,51 @@ export const techStack: { title: string; items: string[] }[] = [
 export type Project = {
 	title: string;
 	description: string;
-	category: 'Site' | 'Application' | 'API';
+	category: 'Site' | 'Application' | 'API' | 'Automatisation';
 	year: string;
 	tags: string[];
 	href: string;
 	featured?: boolean;
 };
 
-/** Réalisations du parcours diplômant RNCP, 2021, telles que listées au CV. */
 export const projects: Project[] = [
+	{
+		title: 'Lecteur IPTV',
+		description:
+			'Un lecteur IPTV publié sur le Google Play Store. On colle le lien de sa playlist, les chaînes arrivent rangées par catégorie, on cherche celle qu’on veut et on la lance dans le lecteur intégré. Les chaînes qu’on regarde souvent se gardent en favoris, pour les retrouver sans repasser par la liste entière.',
+		category: 'Application',
+		year: '2026',
+		tags: ['Google Play Store', 'IPTV', 'Playlist', 'Streaming'],
+		href: '#contact',
+		featured: true
+	},
+	{
+		title: 'Portfolio',
+		description: 'Ce site est une page en SvelteKit et Tailwind CSS. Les textes viennent de mon CV, et ses deux versions sont téléchargeables en PDF.',
+		category: 'Site',
+		year: '2026',
+		tags: ['SvelteKit', 'Tailwind CSS', 'Bits UI'],
+		href: '#top',
+		featured: true
+	},
+	{
+		title: 'Automatisations n8n',
+		description:
+			'Des workflows n8n qui relient les outils entre eux. Quand un outil reçoit une donnée, le workflow la copie, la range et l’envoie aux autres. Chaque workflow supprime une tâche répétitive : transfert de fichiers, envoi de messages, mise à jour de listes.',
+		category: 'Automatisation',
+		year: '2026',
+		tags: ['n8n', 'Workflows', 'Automatisation'],
+		href: '#contact'
+	},
+	{
+		title: 'Landing page pour un artisan électricien',
+		description:
+			'Une page pour un électricien : ce qu’il fait (dépannage, installation, mise aux normes), les villes où il se déplace, et son numéro en haut de la page. Pour le joindre, le visiteur appelle ou laisse un message par le formulaire.',
+		category: 'Site',
+		year: '2026',
+		tags: ['Landing page', 'Artisan', 'SEO local'],
+		href: '#contact'
+	},
 	{
 		title: 'Réseau social d’entreprise',
 		description: 'Une application web où les employés d’une entreprise échangent entre eux. Travail déposé sur GitHub.',
@@ -129,37 +165,52 @@ export const projects: Project[] = [
 	}
 ];
 
-export const experience = [
+export type Job = {
+	period: string;
+	role: string;
+	place: string;
+	description: string;
+	/** Réalisations du poste, affichées en liste dans le détail déroulé. */
+	tasks?: string[];
+};
+
+export const experience: Job[] = [
 	{
 		period: 'janvier 2026 — aujourd’hui',
-		role: 'Architecte logiciels, Code Lion',
+		role: 'Architecte logiciel, Code Lion',
 		place: 'Montréal, Québec',
-		description: 'Je conçois des applications et leur architecture.'
+		description:
+			'Je décide comment les données sont rangées et comment les services échangent, avant le premier écran codé. Ensuite je code aussi : la base, les automatisations n8n et les écrans du dashboard.',
+		tasks: [
+			'Architecture de base de données et synchronisation entre les services.',
+			'Automatisation n8n : les workflows relient les outils de l’équipe et suppriment les recopies manuelles.',
+			'Développement de l’interface d’un dashboard : les écrans qui affichent ces données aux utilisateurs.'
+		]
 	},
 	{
 		period: 'mai 2025 — janvier 2026',
-		role: 'Développeur web, indépendant',
+		role: 'Développeur, indépendant',
 		place: 'Missions en freelance',
-		description: 'Des missions de développement web pour des clients, sans intermédiaire.'
+		description: 'Des missions Fiverr et la création de landing pages pour des clients.',
+		tasks: ['Missions Fiverr', 'Création de landing pages']
 	},
 	{
 		period: 'avril 2022 — avril 2025',
 		role: 'Développeur, A.S.R.E.C',
 		place: 'Tours, Centre-Val de Loire',
-		description: 'Trois ans de développement logiciel dans l’équipe A.S.R.E.C.'
+		description: 'Trois ans dans l’équipe A.S.R.E.C, à construire des services en production.',
+		tasks: [
+			'Développement d’un microservice d’envoi de notifications.',
+			'Développement d’un CRM, architecture backend et frontend.',
+			'Développement d’un service de gestion des droits d’accès à une suite de logiciels.'
+		]
 	},
 	{
 		period: 'mars 2021 — novembre 2021',
-		role: 'Développeur web, indépendant',
+		role: 'Développeur, indépendant',
 		place: 'Parcours diplômant RNCP',
 		description:
-			'Le parcours qui m’a formé : réseau social d’entreprise, API sécurisée, site de commerce en ligne, référencement naturel, animations et intégration de maquettes. Travail déposé sur GitHub.'
-	},
-	{
-		period: 'mai 2019 — septembre 2020',
-		role: 'Conseiller en ventes, Castorama France',
-		place: 'Pontault-Combault, Île-de-France',
-		description: 'Conseil et vente en magasin, avant le développement.'
+			'Pendant ce parcours, j’ai livré un réseau social d’entreprise, une API sécurisée et un site de commerce en ligne. J’y ai aussi travaillé le référencement naturel, les animations et l’intégration de maquettes. Travail déposé sur GitHub.'
 	}
 ];
 

@@ -68,6 +68,15 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${OVH_PORT:-22}" -H "$OVH_HOST" >> ~/.ssh/known_hosts
 
+      - name: Create remote directory
+        env:
+          OVH_HOST: ${{ secrets.OVH_HOST }}
+          OVH_USER: ${{ secrets.OVH_USER }}
+          OVH_PORT: ${{ secrets.OVH_PORT }}
+          OVH_PATH: ${{ secrets.OVH_PATH }}
+        run: |
+          ssh -p "${OVH_PORT:-22}" "$OVH_USER@$OVH_HOST" "mkdir -p '${OVH_PATH}'"
+
       - name: Deploy build/ to OVH VPS
         env:
           OVH_HOST: ${{ secrets.OVH_HOST }}
@@ -75,6 +84,6 @@ jobs:
           OVH_PORT: ${{ secrets.OVH_PORT }}
           OVH_PATH: ${{ secrets.OVH_PATH }}
         run: |
-          rsync -az --delete \
+          rsync -az --delete --mkpath \
             -e "ssh -p ${OVH_PORT:-22}" \
             build/ "$OVH_USER@$OVH_HOST:${OVH_PATH%/}/"
